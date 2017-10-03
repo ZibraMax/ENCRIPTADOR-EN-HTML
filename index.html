@@ -1,0 +1,72 @@
+	<!DOCTYPE html>
+	<html>
+		<head>
+            <link rel="shortcut icon" href="inc.ico" type="image/x-icon" /> 
+            <meta charset="utf-8">
+			<link href="design.css"
+      rel="stylesheet" type="text/css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+			<title>Encriptador</title>
+		</head>
+		<body>
+		<textarea  type="text" name="fuck" id="psw1" placeholder="Ingresa el texto a encriptar o desencriptar aquí."></textarea>
+        <hr>
+			<input name="btn1" type="button" class="btn1" id="btn1" value="Encriptar">
+        	<input type="button" class="btn2" id="btn2" value="Desencriptar">
+        	<a class="claveid">Clave: </a><input name="pass" type="password" class="clave" id="clave" maxlength="6" placeholder="Contraseña">
+        	<p class="text">En el recuadro azul, escriba una contraseña unica de encriptado con el formato XXXX-X donde X es un numero de 0-9</p>
+            <button id="copiar">Copiar Texto</button>
+			<p class="demo" id="demo"></p>
+			<p class="demo2" id="demo2"></p>
+		<script type="text/javascript">
+			document.getElementById("btn1").addEventListener("click", aceptar);
+			document.getElementById("btn2").addEventListener("click", texto);
+			var n = "";
+            var p = "";
+				function aceptar()
+				{   
+                    var ciclos = document.getElementById("clave").value.split('');
+                    var m = document.getElementById("psw1").value;
+                        for (var i = -1; i < m.split('').length; i++)
+                        {
+                        x = m.charCodeAt(i) + parseInt(Math.log(parseInt(ciclos[0] + ciclos[1] + ciclos[2] + ciclos[3]) * ciclos[5]));
+                        n = n + String.fromCharCode(x);
+                        //console.log(x);
+                        }
+					if (ciclos[5] >= 0)
+                    {
+                        document.getElementById("demo").innerHTML = n;
+                    }
+                    else
+                    {
+                        document.getElementById("demo").innerHTML = "Por favor introoduce una clave correcta";
+                    }
+                    p = n;
+					n = "";
+				}
+				function texto()
+				{
+                    var ciclos = document.getElementById("clave").value.split('');
+                    var m = document.getElementById("psw1").value;
+                        for (var i = -1; i < m.split('').length; i++) {
+                        x = m.charCodeAt(i) - parseInt(Math.log(parseInt(ciclos[0] + ciclos[1] + ciclos[2] + ciclos[3]) * ciclos[5]));
+                        n = n + String.fromCharCode(x);
+                        //console.log(x);
+                    }
+                    document.getElementById("demo2").innerHTML = n;
+                    p = n;
+                    n = "";                  
+                }
+                var playButton = $('#copiar');
+                playButton.click(function(){
+                    copyToClipboard();
+                });
+                function copyToClipboard() {
+                $("body").append("<input type='text' id='temp'>");
+                $("#temp").val(p).select();
+                document.execCommand("copy");
+                $("#temp").remove();
+                }
+			</script>
+	</body>
+	</html>
